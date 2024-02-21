@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  app:
+    build: ./.docker-config/app
+    ports:
+      - ${APP_PORT}:4000
+#    command: mix phx.server
+    tty: true
+    volumes:
+      - .:/workspace
+      - node_modules:/workspace/assets/node_modules
+
+  db:
+    image: mysql:8
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_volume:/var/lib/mysql
+
+volumes:
+  mysql_volume:
+  node_modules:
